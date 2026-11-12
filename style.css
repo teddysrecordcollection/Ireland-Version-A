@@ -1,0 +1,740 @@
+@charset "UTF-8";
+/* CSS Document */
+/* =================================
+   LOKALE SCHRIFT – VARIANTE A
+================================= */
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('fonts/CormorantGaramond-VariableFont_wght.ttf') format('truetype');
+  font-weight: 300 700;
+  font-style: normal;
+}
+
+   /* Standard: Tag, freundlich */
+:root {
+  --bg: #E8E4D8;
+  --ink: #1D2B22;
+  --muted: #4F5B50;
+  --accent: #8F4C36;
+  --gruen: #183B2B;
+
+  --himmel1: #CBD8C6;
+  --himmel2: #E8E4D8;
+
+  --huegel1: #87998A;
+  --huegel2: #4E7059;
+  --huegel3: #183B2B;
+
+  --gestirn: #A65E43;
+  --gestirn-opa: 1;
+  --regen-opa: 0;
+}
+
+/* Regen am Tag: grau-grün, Sonne fast weg */
+body[data-wetter="regen"] {
+  --bg: #D3D7CD;
+  --himmel1: #A9B4AD;
+  --himmel2: #D3D7CD;
+
+  --huegel1: #7B8F82;
+  --huegel2: #4D6757;
+
+  --gestirn-opa: .2;
+  --regen-opa: .35;
+}
+
+/* Nacht: Kaminabend, dunkles Grün und Kupfer */
+body[data-zeit="nacht"] {
+  --bg: #121C16;
+  --ink: #ECE5CF;
+  --muted: #B3B8A8;
+  --accent: #C78C70;
+  --gruen: #86B79A;
+
+  --himmel1: #0B120E;
+  --himmel2: #1C3024;
+
+  --huegel1: #26402F;
+  --huegel2: #1B3024;
+  --huegel3: #0F1A13;
+
+  --gestirn: #ECE5CF;
+  --gestirn-opa: .9;
+}
+
+    body[data-zeit="nacht"][data-wetter="regen"] { --gestirn-opa: .15; --regen-opa: .3; }
+
+    * { box-sizing: border-box; }
+    body {
+    margin: 0; 
+	background: var(--bg); 
+    color: var(--ink);
+      font-family: "Cormorant Garamond", Georgia, serif; 
+		font-size: 1.3rem; 
+		line-height: 1.5; 
+		font-weight: 500;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      body { transition: background-color .8s, color .8s; }
+    }
+    
+a { 
+	color: var(--accent); 
+}
+    
+a:focus-visible, button:focus-visible { 
+	outline: 3px solid var(--accent); 
+	outline-offset: 3px; 
+}
+
+    header, main, footer { max-width: 72rem; margin: 0 auto; padding-left: 1.25rem; padding-right: 1.25rem; }
+    header { padding-top: 1.5rem; font-size: 1.5rem; font-weight: 700; letter-spacing: .02em; }
+
+   .hero {
+  display: grid;
+  gap: 2rem;
+  padding: 2rem 0 3rem;
+  align-items: center;
+}
+
+.hero > div:first-child {
+  align-self: start;
+  padding-top: 0;
+}
+
+.hero > div:first-child .eyebrow {
+  margin-top: 0;
+}
+
+@media (min-width: 52rem) {
+  .hero {
+    grid-template-columns: 1fr 1.15fr;
+    gap: 4rem;
+    padding: 4rem 0 5rem;
+  }
+}
+
+.hero-bild {
+  min-height: 320px;
+  aspect-ratio: 10 / 9;
+  border-radius: 6px;
+  background-image:
+    linear-gradient(to top, rgba(15, 35, 24, .15), transparent 45%),
+    url("images/hero.jpg");
+  background-size: cover;
+  background-position: center;
+}
+    h1 { margin: 0; font-size: clamp(3.4rem, 10vw, 7rem); line-height: .95; font-weight: 500; letter-spacing: -.01em; }
+    .hero p { max-width: 32rem; margin: 1.25rem 0 0; }
+    .kleingedruckt { color: var(--muted); font-size: 1.1rem; }
+
+    .landschaft {
+      position: relative; overflow: hidden; border-radius: 6px; aspect-ratio: 10 / 9;
+      background: linear-gradient(var(--himmel1), var(--himmel2));
+    }
+    .landschaft svg { display: block; width: 100%; height: 100%; }
+    .landschaft::after { /* Regenstreifen */
+      content: ""; position: absolute; inset: 0; opacity: var(--regen-opa); pointer-events: none;
+      background: repeating-linear-gradient(105deg, transparent 0 14px, rgba(255,255,255,.55) 14px 15px);
+    }
+    #gestirn { fill: var(--gestirn); opacity: var(--gestirn-opa); }
+    #huegel-1 { fill: var(--huegel1); } #huegel-2 { fill: var(--huegel2); } #huegel-3 { fill: var(--huegel3); }
+
+    .wetter { padding: 2rem 0; border-top: 2px solid var(--gruen); }
+    .wetter h2, .angebote h2 { margin: 0 0 .75rem; font-size: 1.1rem; font-weight: 700; color: var(--muted); }
+    #wetter-satz { margin: 0; font-size: clamp(1.8rem, 5vw, 3rem); line-height: 1.15; max-width: 40rem; }
+    #wetter-stand { margin: .75rem 0 0; }
+    #test-hinweis { margin-top: 1rem; padding: .5rem .75rem; border: 2px dashed var(--accent); }
+
+.wetter-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.wetter-info {
+  grid-column: 2;
+}
+
+.wetter-layout .landschaft {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+@media (min-width: 52rem) {
+  .wetter-layout {
+    grid-template-columns: 1fr 1.1fr;
+    gap: 4rem;
+  }
+}
+
+.wetter .landschaft {
+  width: 100%;
+  aspect-ratio: 10 / 7;
+}
+
+
+    .angebote { padding: 2rem 0 3rem; }
+    #fokus-text { margin: 0 0 1.5rem; font-size: 1.6rem; }
+    ul { list-style: none; margin: 0; padding: 0; }
+    li { padding: 1.25rem 0 1.25rem 1.25rem; border-left: 4px solid transparent; border-bottom: 1px solid var(--muted); }
+    li.im-fokus { border-left-color: var(--accent); }
+    li strong { display: block; font-size: 1.8rem; line-height: 1.15; }
+    li span { color: var(--muted); }
+    .button {
+      display: inline-block; margin-top: 2rem; padding: .8rem 1.6rem; background: var(--gruen); color: var(--bg);
+      font: inherit; font-weight: 700; text-decoration: none; border-radius: 4px;
+    }
+    body[data-zeit="nacht"] .button { background: var(--accent); color: #121C16; }
+
+    footer { padding-top: 2rem; padding-bottom: 3rem; font-size: 1rem; color: var(--muted); border-top: 1px solid var(--muted); }
+    footer p { margin: .3rem 0; }
+
+
+header.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.2rem 5%;
+  background: var(--gruen);
+  border-bottom: 1px solid rgba(232, 228, 216, 0.2);
+}
+
+.site-header .logo {
+  color: #F0E9DC;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-header nav {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.site-header nav a {
+  color: #E8E4D8;
+  font-family: Arial, sans-serif;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.site-header nav a:hover {
+  color: #D9A78B;
+}
+
+.site-header nav a:focus-visible {
+  outline: 2px solid #D9A78B;
+  outline-offset: 5px;
+}
+
+.site-header nav .nav-cta {
+  background: var(--accent);
+  color: #FFFFFF;
+  padding: 0.7rem 1.1rem;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+.site-header nav .nav-cta:hover {
+  background: #A96349;
+  color: #FFFFFF;
+}
+
+/* MOBILE NAVIGATION */
+
+@media (max-width: 700px) {
+  header.site-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .site-header nav {
+    justify-content: flex-start;
+    gap: 1rem;
+  }
+}
+
+
+
+/* ==========================
+   EXPLORE IRELAND
+========================== */
+
+.destinations {
+  padding: 5rem 2rem;
+}
+
+.section-heading {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-family: Arial, sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.section-heading h2 {
+  font-size: 3rem;
+  color: var(--ink);
+  margin: 0.5rem 0;
+}
+
+.section-heading p {
+  color: var(--muted);
+}
+
+.city-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.city-card {
+  min-height: 300px;
+  padding: 1.8rem;
+  border: 1px solid rgba(29,43,34,.2);
+  border-radius: 4px;
+
+  background-color: var(--gruen);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  color: #fff;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+/* STADTBILDER */
+
+.city-card[data-city="dublin"] {
+  background-image:
+    linear-gradient(to top, rgba(0,0,0,.75), transparent 75%),
+    url("images/dublin.jpg");
+}
+
+.city-card[data-city="galway"] {
+  background-image:
+    linear-gradient(to top, rgba(0,0,0,.75), transparent 75%),
+    url("images/galway.jpg");
+}
+
+.city-card[data-city="cork"] {
+  background-image:
+    linear-gradient(to top, rgba(0,0,0,.75), transparent 75%),
+    url("images/cork.jpg");
+}
+
+.city-card[data-city="belfast"] {
+  background-image:
+    linear-gradient(to top, rgba(0,0,0,.75), transparent 75%),
+    url("images/belfast.jpg");
+}
+
+.city-number {
+  font-family: Arial, sans-serif;
+  font-size: .8rem;
+  font-weight: normal;
+  color: #fff;
+  margin-bottom: auto;
+}
+
+.city-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: #F0E9DC;
+  line-height: 1.15;
+  margin-top: 1.2rem;
+  margin-bottom: .2rem;
+}
+
+.city-description,
+.city-region {
+  font-family: Arial, sans-serif;
+  font-size: .78rem;
+  line-height: 1.5;
+  margin-top: .3rem;
+  color: #E8E4D8;
+}
+
+.city-region {
+  color: #D6C8B7;
+  font-size: .72rem;
+}
+
+.city-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 25px rgba(0,0,0,.2);
+}
+
+.city-card[aria-pressed="true"] {
+  outline: 3px solid var(--accent);
+  outline-offset: -3px;
+}
+
+.city-card:hover .city-number,
+.city-card[aria-pressed="true"] .city-number {
+  color: #fff;
+}
+
+.city-card:hover .city-region,
+.city-card[aria-pressed="true"] .city-region {
+  color: #fff;
+}
+
+.city-card:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.city-detail {
+  max-width: 72rem;
+  margin: 2rem auto 0;
+  padding: 2rem;
+  border-left: 4px solid var(--accent);
+  background: rgba(135, 153, 138, 0.15);
+}
+
+.city-detail h3 {
+  color: var(--ink);
+  font-size: 2rem;
+  margin: 0.5rem 0;
+}
+
+.city-detail p:last-child {
+  color: var(--muted);
+}
+
+/* Mobile Ansicht */
+@media (max-width: 800px) {
+  .city-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .city-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-heading h2 {
+    font-size: 2.3rem;
+  }
+}
+
+/* MUSIK – IRISH MUSIC SCENE */
+
+.music {
+  padding: 5rem 2rem;
+  background: var(--himmel1);
+  color: var(--ink);
+}
+
+.music-heading {
+  max-width: 45rem;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.music-heading h2 {
+  font-size: 3rem;
+  color: var(--ink);
+  margin: .5rem 0;
+}
+
+.music-heading > p:last-child {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.music-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.music-card {
+  padding: 2rem;
+  min-height: 230px;
+  background: var(--bg);
+  border-top: 3px solid var(--accent);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.music-number {
+  color: var(--accent);
+  font-family: Arial, sans-serif;
+  font-size: .75rem;
+  letter-spacing: .1em;
+}
+
+.music-card h3 {
+  color: var(--ink);
+  font-size: 1.8rem;
+  margin: 1.5rem 0 .5rem;
+}
+
+.music-card p {
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.music-card a {
+  color: var(--accent);
+  font-family: Arial, sans-serif;
+  font-size: .85rem;
+  font-weight: bold;
+  text-decoration: none;
+  margin-top: auto;
+}
+
+.music-card a:hover {
+  text-decoration: underline;
+}
+
+.music-card a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+@media (max-width: 800px) {
+  .music-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .music-heading h2 {
+    font-size: 2.3rem;
+  }
+}
+
+/* MEHR STRUKTUR ZWISCHEN DEN SEITENBEREICHEN */
+
+/* Hero */
+.hero {
+  margin-bottom: 2rem;
+  padding-bottom: 4rem;
+  border-bottom: 1px solid rgba(143, 76, 54, .45);
+}
+
+/* Wetter */
+.wetter {
+  margin: 0 -5%;
+  padding: 3.5rem 5%;
+  background: var(--himmel1);
+  border-top: none;
+  border-bottom: 1px solid rgba(29, 43, 34, .2);
+}
+
+/* Mehr Abstand bei den folgenden Bereichen */
+/* Abstände zwischen den Seitenbereichen */
+.destinations,
+.music,
+.angebote {
+  padding-top: 2.5rem;
+  padding-bottom: 4rem;
+}
+
+/* Dezente Trennlinien */
+.destinations {
+  border-bottom: 1px solid rgba(143, 76, 54, .35);
+}
+
+.music {
+  border-top: 1px solid rgba(143, 76, 54, .35);
+}
+
+.angebote {
+  border-top: 1px solid rgba(143, 76, 54, .35);
+}
+
+/* MUSIKBEREICH – DUNKLER KONTRAST */
+
+.music {
+  background: var(--gruen);
+  color: var(--bg);
+  border-top: 1px solid var(--accent);
+}
+
+.music .eyebrow {
+  color: var(--accent);
+}
+
+.music h2,
+.music h3 {
+  color: var(--bg);
+}
+
+.music .music-card {
+  background: rgba(255, 255, 255, .07);
+  border: 1px solid rgba(232, 228, 216, .2);
+  color: var(--bg);
+}
+
+.music .music-card p {
+  color: var(--bg);
+}
+
+.music .music-card a {
+  color: #D9A78B;
+}
+
+.music .music-card a:hover {
+  color: #FFFFFF;
+}
+
+/* Regen: etwas kühler */
+body[data-wetter="regen"] .music {
+  background: #263B32;
+}
+
+/* Nacht: besonders dunkler Kontrast */
+body[data-zeit="nacht"] .music {
+  background: #0B120E;
+}
+
+/* MUSIKBEREICH – FARBEN UND TYPOGRAFIE VERFEINERN */
+
+.music {
+  background: var(--gruen);
+  color: #F0E9DC;
+  padding: 5rem 2rem;
+}
+
+/* Kleine Überschrift */
+.music .eyebrow {
+  color: #D9A78B;
+  font-size: .8rem;
+  letter-spacing: .16em;
+  font-weight: 700;
+}
+
+/* Hauptüberschrift */
+.music-heading h2 {
+  color: #F0E9DC;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.6rem, 5vw, 3.8rem);
+  line-height: 1.05;
+  margin-bottom: 1rem;
+}
+
+/* Erklärungstext */
+.music-heading > p:last-child {
+  color: #E2DDCF;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Künstler-Karten heller gestalten */
+.music .music-card {
+  background: #E8E4D8;
+  color: #1D2B22;
+  border: 1px solid rgba(232, 228, 216, .7);
+  padding: 2rem;
+}
+
+/* Nummer und Stadt */
+.music .music-number {
+  color: #8F4C36;
+  font-size: .75rem;
+  letter-spacing: .12em;
+  font-weight: 700;
+}
+
+/* Künstlernamen */
+.music .music-card h3 {
+  color: #183B2B;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+}
+
+/* Beschreibung in den Karten */
+.music .music-card p {
+  color: #4F5B50;
+  font-size: .95rem;
+  line-height: 1.6;
+}
+
+/* Links */
+.music .music-card a {
+  color: #8F4C36;
+  font-weight: 700;
+}
+
+.music .music-card a:hover {
+  color: #183B2B;
+}
+
+/* Regenmodus */
+body[data-wetter="regen"] .music {
+  background: #263B32;
+}
+
+/* Nachtmodus */
+body[data-zeit="nacht"] .music {
+  background: #0B120E;
+}
+
+/* MUSIKBEREICH – SCHRIFT ETWAS VERGRÖSSERN */
+
+.music-heading > p:last-child {
+  font-size: 1.2rem;
+  line-height: 1.75;
+}
+
+.music .music-number {
+  font-size: .85rem;
+}
+
+.music .music-card h3 {
+  font-size: 2.3rem;
+}
+
+.music .music-card p {
+  font-size: 1.08rem;
+  line-height: 1.7;
+}
+
+.music .music-card a {
+  font-size: 1rem;
+}
+
+
+
+.hero > div:first-child > p:not(.kleingedruckt) {
+  font-size: 1.05rem;
+  line-height: 1.75;
+  max-width: 34rem;
+}
